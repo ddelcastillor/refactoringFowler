@@ -11,7 +11,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.text.StrBuilder;
 
-public class CustomerTest {
+public class CustomerStatementHTMLTest {
 
     private static final Movie NEW_RELEASED_MOVIE = new Movie("A brand new film", Movie.NEW_RELEASE);
     private static final Movie CHILDREN_MOVIE = new Movie("Shaun the sheep", Movie.CHILDRENS);
@@ -20,7 +20,7 @@ public class CustomerTest {
     @Test
     public void noRentalImpliesNoCharge() throws Exception {
     	Customer customer = createCustomer();
-        String statement = customer.statement();
+        String statement = customer.htmlStatement();
         List<Rental> rentals = Collections.emptyList();
         assertEquals(expectedStatement(customer,rentals),statement);
     }
@@ -28,7 +28,7 @@ public class CustomerTest {
 	@Test
     public void noRentalGrantsNoPoints() throws Exception {
     	Customer customer = createCustomer();
-        String statement = customer.statement();
+        String statement = customer.htmlStatement();
         List<Rental> rentals = Collections.emptyList();
         assertEquals(expectedStatement(customer,rentals),statement);
     }
@@ -39,7 +39,7 @@ public class CustomerTest {
     	Customer customer = createCustomer();
         customer.addRental(new Rental(NEW_RELEASED_MOVIE, 1));
 
-        String statement = customer.statement();
+        String statement = customer.htmlStatement();
         List<Rental> rentals = Arrays.asList(new Rental(NEW_RELEASED_MOVIE, 1));
         assertEquals(expectedStatement(customer,rentals),statement);
     }
@@ -50,7 +50,7 @@ public class CustomerTest {
     	Customer customer = createCustomer();
         customer.addRental(new Rental(NEW_RELEASED_MOVIE, 2));
 
-        String statement = customer.statement();
+        String statement = customer.htmlStatement();
         List<Rental> rentals = Arrays.asList(new Rental(NEW_RELEASED_MOVIE, 2));
         assertEquals(expectedStatement(customer,rentals),statement);
     }
@@ -60,7 +60,7 @@ public class CustomerTest {
     	Customer customer = createCustomer();
         customer.addRental(new Rental(NEW_RELEASED_MOVIE, 2));
 
-        String statement = customer.statement();
+        String statement = customer.htmlStatement();
         List<Rental> rentals = Arrays.asList(new Rental(NEW_RELEASED_MOVIE, 2));
         assertEquals(expectedStatement(customer,rentals),statement);
     }
@@ -70,7 +70,7 @@ public class CustomerTest {
     	Customer customer = createCustomer();
         customer.addRental(new Rental(CHILDREN_MOVIE, 1));
 
-        String statement = customer.statement();
+        String statement = customer.htmlStatement();
         List<Rental> rentals = Arrays.asList(new Rental(CHILDREN_MOVIE, 1));
         assertEquals(expectedStatement(customer,rentals),statement);
     }
@@ -80,7 +80,7 @@ public class CustomerTest {
     	Customer customer = createCustomer();
         customer.addRental(new Rental(CHILDREN_MOVIE, 5));
 
-        String statement = customer.statement();
+        String statement = customer.htmlStatement();
         List<Rental> rentals = Arrays.asList(new Rental(CHILDREN_MOVIE, 5));
         assertEquals(expectedStatement(customer,rentals),statement);
     }
@@ -90,7 +90,7 @@ public class CustomerTest {
     	Customer customer = createCustomer();
         customer.addRental(new Rental(CHILDREN_MOVIE, 2));
 
-        String statement = customer.statement();
+        String statement = customer.htmlStatement();
         List<Rental> rentals = Arrays.asList(new Rental(CHILDREN_MOVIE, 2));
         assertEquals(expectedStatement(customer,rentals),statement);
     }
@@ -100,7 +100,7 @@ public class CustomerTest {
     	Customer customer = createCustomer();
         customer.addRental(new Rental(REGULAR_MOVIE, 1));
 
-        String statement = customer.statement();
+        String statement = customer.htmlStatement();
         List<Rental> rentals = Arrays.asList(new Rental(REGULAR_MOVIE, 1));
         assertEquals(expectedStatement(customer,rentals),statement);
     }
@@ -110,7 +110,7 @@ public class CustomerTest {
     	Customer customer = createCustomer();
         customer.addRental(new Rental(REGULAR_MOVIE, 4));
 
-        String statement = customer.statement();
+        String statement = customer.htmlStatement();
         List<Rental> rentals = Arrays.asList(new Rental(REGULAR_MOVIE, 4));
         assertEquals(expectedStatement(customer,rentals),statement);
     }
@@ -120,7 +120,7 @@ public class CustomerTest {
         Customer customer = createCustomer();
         customer.addRental(new Rental(REGULAR_MOVIE, 2));
 
-        String statement = customer.statement();
+        String statement = customer.htmlStatement();
         List<Rental> rentals = Arrays.asList(new Rental(REGULAR_MOVIE, 2));
         assertEquals(expectedStatement(customer,rentals),statement);
     }
@@ -131,7 +131,7 @@ public class CustomerTest {
         customer.addRental(new Rental(REGULAR_MOVIE, 1));
         customer.addRental(new Rental(CHILDREN_MOVIE, 2));
 
-        String statement = customer.statement();
+        String statement = customer.htmlStatement();
         List<Rental> rentals = Arrays.asList(new Rental(REGULAR_MOVIE, 1),new Rental(CHILDREN_MOVIE, 2));
         assertEquals(expectedStatement(customer,rentals),statement);
     }
@@ -142,7 +142,7 @@ public class CustomerTest {
         customer.addRental(new Rental(REGULAR_MOVIE, 1));
         customer.addRental(new Rental(CHILDREN_MOVIE, 2));
 
-        String statement = customer.statement();
+        String statement = customer.htmlStatement();
         List<Rental> rentals = Arrays.asList(new Rental(REGULAR_MOVIE, 1),new Rental(CHILDREN_MOVIE, 2));
         assertEquals(expectedStatement(customer,rentals),statement);
     }
@@ -152,19 +152,19 @@ public class CustomerTest {
     }
     
     private String expectedStatement(Customer customer,List<Rental> rentals) {
-        StrBuilder sb = new StrBuilder("Rental Record for ");
-        sb.appendln(customer.getName());
+        StrBuilder sb = new StrBuilder("<H1>Rental Record for ");
+        sb.appendln("<EM>"+customer.getName()+"</EM></H1><P>");
         double totalAmount = 0;
         int frequentRenterPoints = 0;
         for (Rental rental : rentals) {
         	final double rentalAmount = calculateRentalAmount(rental);
         	totalAmount+=rentalAmount;
-            sb.appendln("\t"+rental.getMovie().getTitle() + "\t"+rentalAmount);	
+            sb.appendln(rental.getMovie().getTitle() + ": " +rentalAmount+"<BR>");	
         	frequentRenterPoints += calculateFrequentRenterPoints(rental);
 		}
 
-        sb.appendln("You owed "+totalAmount);
-        sb.appendln("You earned "+frequentRenterPoints+" frequent renter points");
+        sb.appendln("<P>You owe <EM>"+totalAmount+"</EM><P>");
+        sb.appendln("On this renal you earned <EM>"+frequentRenterPoints+"</EM> frequent renter points <P>");
         return sb.toString();
 	}
 
