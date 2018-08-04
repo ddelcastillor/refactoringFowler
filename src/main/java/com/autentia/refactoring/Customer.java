@@ -5,6 +5,9 @@ import java.util.Vector;
 import java.util.Enumeration;
 
 public class Customer {
+	private String name;
+	private Vector<Rental> rentals = new Vector<Rental>();
+	
 	public Customer(String name) {
 		this.name = name;
 	}
@@ -27,8 +30,8 @@ public class Customer {
 			Rental each = rentals.nextElement();
 			double thisAmount=0;
 			// determines the amount for each line
-			thisAmount = amountFor(each);
-
+			thisAmount = each.getCharge();
+			
 			frequentRenterPoints++;
 
 			if (each.getMovie().getPriceCode() == Movie.NEW_RELEASE && each.getDaysRented() > 1)
@@ -44,11 +47,4 @@ public class Customer {
 
 		return result;
 	}
-
-	private double amountFor(Rental aRental) {
-		return aRental.getCharge(aRental);
-	}
-
-	private String name;
-	private Vector<Rental> rentals = new Vector<Rental>();
 }
