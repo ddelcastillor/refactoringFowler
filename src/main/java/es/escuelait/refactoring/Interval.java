@@ -32,7 +32,7 @@ public class Interval {
 			includeLimitMaximum(value,this.maximumClosed);
 	}
 
-	public boolean includeLimitMinimum(double value, boolean minimumClosed) {
+	private boolean includeLimitMinimum(double value, boolean minimumClosed) {
 		return this.minimum < value || this.minimum == value && minimumClosed;
 	}
 	
@@ -40,18 +40,27 @@ public class Interval {
 		return value < this.maximum || this.maximum == value && maximumClosed;
 	}
 	
+	private boolean excludeLimitMinimum(double value, boolean minimumClosed) {
+		return value < this.minimum || this.minimum == value && minimumClosed && !this.minimumClosed ;
+	}
+	
+	private boolean excludeLimitMaximum(double value, boolean maximumClosed) {
+		return value > this.maximum  || this.maximum == value && maximumClosed && !this.maximumClosed;
+	}
+	
+	
 	
 	public boolean includes(Interval that) {
 		
 		
-		if (that.minimum < this.minimum || this.minimum == that.minimum && that.minimumClosed && !this.minimumClosed) {
+		if (excludeLimitMinimum(that.minimum,that.minimumClosed)) {
 			return false;
 		}
 		
-		if (that.maximum > this.maximum  || this.maximum == that.maximum && that.maximumClosed && !this.maximumClosed) {
+		if (excludeLimitMaximum(that.maximum,that.maximumClosed)) {
 			return false;
 		}
-		
+
 		return true;
 	}
 	
