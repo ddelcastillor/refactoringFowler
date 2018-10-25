@@ -32,6 +32,13 @@ public class LimitMinimum {
 	public boolean excludeLimitMinimum(double value, boolean minimumClosed) {
 		return value < this.minimum || this.minimum == value && minimumClosed && !this.minimumClosed ;
 	}
+
+	
+	public boolean excludeLimitMinimum(Interval that) {
+		return this.excludeLimitMinimum(that.getLimitMinimum().getMinimum(), that.getLimitMinimum().isMinimumClosed());
+	}
+	
+	
 	
 
 

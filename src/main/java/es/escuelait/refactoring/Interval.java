@@ -36,18 +36,14 @@ public class Interval {
 			   limitMaximum.includeLimitMaximum(value, limitMaximum.isMaximumClosed());
 	}
 
-			
-	public boolean includes(Interval that) {
-		if (limitMinimum.excludeLimitMinimum(that.getLimitMinimum().getMinimum(), that.getLimitMinimum().isMinimumClosed())) {
-			return false;
-		}
-		
-		if (limitMaximum.excludeLimitMaximum(that.getLimitMaximum().getMaximum(), that.getLimitMaximum().isMaximumClosed())) {
-			return false;
-		}
 				
-		return true;
+	public boolean includes(Interval that) {
+		
+		return !(limitMinimum.excludeLimitMinimum(that) || limitMaximum.excludeLimitMaximum(that)) ;
+				
 	}
+	
+
 	
 
 	

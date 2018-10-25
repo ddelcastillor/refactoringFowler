@@ -30,4 +30,8 @@ public class LimitMaximum {
 		return value > this.maximum  || this.maximum == value && maximumClosed && !this.maximumClosed;
 	}
 
+	public boolean excludeLimitMaximum(Interval that) {
+		return this.excludeLimitMaximum(that.getLimitMaximum().getMaximum(), that.getLimitMaximum().isMaximumClosed());
+	}
+
 }
