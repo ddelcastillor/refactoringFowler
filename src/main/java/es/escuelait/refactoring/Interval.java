@@ -28,20 +28,22 @@ public class Interval {
 	}
 	
 	public boolean includes(double value) {
-		return includeLimitMinimum(value) && 
-			includeLimitMaximum(value);
+		return includeLimitMinimum(value,this.minimumClosed) && 
+			includeLimitMaximum(value,this.maximumClosed);
 	}
 
-	private boolean includeLimitMaximum(double value) {
-		return value < this.maximum || this.maximum == value && this.maximumClosed;
+	public boolean includeLimitMinimum(double value, boolean minimumClosed) {
+		return this.minimum < value || this.minimum == value && minimumClosed;
 	}
-
-	private boolean includeLimitMinimum(double value) {
-		return this.minimum < value || this.minimum == value && this.minimumClosed;
+	
+	private boolean includeLimitMaximum(double value, boolean maximumClosed) {
+		return value < this.maximum || this.maximum == value && maximumClosed;
 	}
 	
 	
 	public boolean includes(Interval that) {
+		
+		
 		if (that.minimum < this.minimum || this.minimum == that.minimum && that.minimumClosed && !this.minimumClosed) {
 			return false;
 		}
