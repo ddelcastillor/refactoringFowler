@@ -31,15 +31,15 @@ public class Interval {
 	}
 	
 	public boolean includes(double value) {
-		return limitMinimum.includeLimitMinimum(value, limitMinimum.isMinimumClosed())
+		return limitMinimum.include(value, limitMinimum.isMinimumClosed())
 				 && 
-			   limitMaximum.includeLimitMaximum(value, limitMaximum.isMaximumClosed());
+			   limitMaximum.include(value, limitMaximum.isMaximumClosed());
 	}
 
 				
 	public boolean includes(Interval that) {
 		
-		return !(limitMinimum.excludeLimitMinimum(that) || limitMaximum.excludeLimitMaximum(that)) ;
+		return !(limitMinimum.exclude(that) || limitMaximum.exclude(that)) ;
 				
 	}
 	

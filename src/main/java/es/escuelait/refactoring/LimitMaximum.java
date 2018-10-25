@@ -22,7 +22,7 @@ public class LimitMaximum {
 		this.maximum += value;
 	}
 
-	public boolean includeLimitMaximum(double value, boolean maximumClosed) {
+	public boolean include(double value, boolean maximumClosed) {
 		return value < this.maximum || this.maximum == value && maximumClosed;
 	}
 		
@@ -30,7 +30,7 @@ public class LimitMaximum {
 		return value > this.maximum  || this.maximum == value && maximumClosed && !this.maximumClosed;
 	}
 
-	public boolean excludeLimitMaximum(Interval that) {
+	public boolean exclude(Interval that) {
 		return this.excludeLimitMaximum(that.getLimitMaximum().getMaximum(), that.getLimitMaximum().isMaximumClosed());
 	}
 
