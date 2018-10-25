@@ -31,38 +31,21 @@ public class Interval {
 	}
 	
 	public boolean includes(double value) {
-		return includeLimitMinimum(value,limitMinimum.isMinimumClosed()) && 
-			includeLimitMaximum(value,limitMaximum.isMaximumClosed());
+		return limitMinimum.includeLimitMinimum(value, limitMinimum.isMinimumClosed())
+				 && 
+			   limitMaximum.includeLimitMaximum(value, limitMaximum.isMaximumClosed());
 	}
 
-	private boolean includeLimitMinimum(double value, boolean minimumClosed) {
-		return limitMinimum.includeLimitMinimum(value, minimumClosed);
-	}
-	
-	private boolean includeLimitMaximum(double value, boolean maximumClosed) {
-		return limitMaximum.includeLimitMaximum(value, maximumClosed);
-	}
-	
-	private boolean excludeLimitMinimum(double value, boolean minimumClosed) {
-		return limitMinimum.excludeLimitMinimum(value, minimumClosed);
-	}
-	
-	private boolean excludeLimitMaximum(double value, boolean maximumClosed) {
-		return limitMaximum.excludeLimitMaximum(value, maximumClosed);
-//		return value > limitMaximum.getMaximum()  || limitMaximum.getMaximum() == value && maximumClosed && !limitMaximum.isMaximumClosed();
-	}
-	
+			
 	public boolean includes(Interval that) {
-		
-		
-		if (excludeLimitMinimum(that.getLimitMinimum().getMinimum(),that.getLimitMinimum().isMinimumClosed())) {
+		if (limitMinimum.excludeLimitMinimum(that.getLimitMinimum().getMinimum(), that.getLimitMinimum().isMinimumClosed())) {
 			return false;
 		}
 		
-		if (excludeLimitMaximum(that.getLimitMaximum().getMaximum(),that.getLimitMaximum().isMaximumClosed())) {
+		if (limitMaximum.excludeLimitMaximum(that.getLimitMaximum().getMaximum(), that.getLimitMaximum().isMaximumClosed())) {
 			return false;
 		}
-
+				
 		return true;
 	}
 	
