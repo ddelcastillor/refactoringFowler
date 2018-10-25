@@ -40,14 +40,22 @@ public class Interval {
 		return this.minimum < value || this.minimum == value && this.minimumClosed;
 	}
 	
+	
 	public boolean includes(Interval that) {
-		if (this.minimum > that.minimum || this.minimum == that.minimum && !this.minimumClosed && that.minimumClosed) {
-				return false;
-			}
-		if (this.maximum < that.maximum || this.maximum == that.maximum && !this.maximumClosed && that.maximumClosed) {
-				return false;
+		if (that.minimum < this.minimum || this.minimum == that.minimum && that.minimumClosed && !this.minimumClosed) {
+			return false;
 		}
+		
+		if (that.maximum > this.maximum  || this.maximum == that.maximum && that.maximumClosed && !this.maximumClosed) {
+			return false;
+		}
+		
 		return true;
 	}
+	
+
+	
+
+
 
 }
