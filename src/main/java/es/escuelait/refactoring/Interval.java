@@ -27,19 +27,21 @@ public class Interval {
 	}
 
 	public double length() {
-		return limitMaximum.getMaximum() - limitMinimum.getMinimum();
+		return limitMaximum.getValue() - limitMinimum.getValue();
 	}
 	
 	public boolean includes(double value) {
-		return limitMinimum.include(new LimitMinimum(value, limitMinimum.isMinimumClosed()))
+		return limitMinimum.include(new LimitMinimum(value, limitMinimum.isClosed()))
 				 && 
-			   limitMaximum.include(new LimitMaximum(value, limitMaximum.isMaximumClosed()));
+			   limitMaximum.include(new LimitMaximum(value, limitMaximum.isClosed()));
 	}
 
 				
 	public boolean includes(Interval that) {
 		
-		return !(limitMinimum.exclude(that.getLimitMinimum()) || limitMaximum.exclude(that.getLimitMaximum())) ;
+		return !(limitMinimum.exclude(that.getLimitMinimum()) 
+				|| limitMaximum.exclude(that.getLimitMaximum())
+				) ;
 				
 	}
 	

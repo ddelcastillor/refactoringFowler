@@ -4,7 +4,6 @@ public class LimitMaximum extends Limit {
 
 	public LimitMaximum(double maximum, boolean maximumClosed) {
 		super(maximum, maximumClosed);
-		loadMaximumLimitTypes();
 	}
 
 	public double getMaximum() {
@@ -17,25 +16,12 @@ public class LimitMaximum extends Limit {
 
 	@Override
 	public boolean include(Limit that) {
-		return open.include(that)|| close.include(that);
+		return open.includeMaximum(that)|| close.includeMaximum(that);
 	}
 
 	@Override
 	public boolean exclude(Limit that) {
-		return open.exclude(that) || close.exclude(that);
-	}
-
-	
-	@Override
-	public void increase(double value) {
-		super.increase(value);
-		loadMaximumLimitTypes();
-	}
-
-
-	private void loadMaximumLimitTypes() {
-		open = new LimitTypeOpenMaximum(this.getValue(), this.isClosed());
-		close = new LimitTypeCloseMaximum(this.getValue(), this.isClosed());
+		return open.excludeMaximum(that) || close.excludeMaximum(that);
 	}
 
 }

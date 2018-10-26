@@ -18,9 +18,13 @@ public abstract class LimitType {
 	}
 
 	
-	abstract public boolean exclude(Limit that);
+	abstract public boolean excludeMinimum(Limit that);
 	
-	abstract public boolean include(Limit that);
+	abstract public boolean includeMinimum(Limit that);
+	
+	abstract public boolean excludeMaximum(Limit that);
+	
+	abstract public boolean includeMaximum(Limit that);
 	
 	
 	
