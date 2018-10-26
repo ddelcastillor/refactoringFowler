@@ -1,6 +1,8 @@
 package es.escuelait.refactoring;
 
 public class Interval {
+	
+	private Limit maximum;
 		
 	private LimitMaximum limitMaximum;
 	
