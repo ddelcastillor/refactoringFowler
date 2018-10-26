@@ -16,12 +16,28 @@ public class LimitMinimum extends Limit{
 	
 	@Override
 	public boolean include(Limit that) {
-		return this.getValue() < that.getValue() || this.getValue() == that.getValue() && this.isClosed();
+		return includeOpen(that) || includeClose(that);
+	}
+
+	private boolean includeClose(Limit that) {
+		return this.getValue() == that.getValue() && this.isClosed();
+	}
+
+	private boolean includeOpen(Limit that) {
+		return this.getValue() < that.getValue();
 	}
 	
 	@Override
 	public boolean exclude(Limit that) {
-		return that.getValue() < this.getValue() || this.getValue() == that.getValue() && that.isClosed() && !this.isClosed() ;
+		return excludeOpen(that) || excludeClose(that) ;
+	}
+
+	private boolean excludeClose(Limit that) {
+		return this.getValue() == that.getValue() && that.isClosed() && !this.isClosed();
+	}
+
+	private boolean excludeOpen(Limit that) {
+		return that.getValue() < this.getValue();
 	}
 	
 
