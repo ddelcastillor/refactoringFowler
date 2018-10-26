@@ -1,36 +1,32 @@
 package es.escuelait.refactoring;
 
-public class LimitMaximum {
+public class LimitMaximum extends Limit{
 	
 	
-	private Limit maximum;
-
 	public LimitMaximum(double maximum, boolean maximumClosed) {
-		this.maximum = new Limit(maximum,  maximumClosed);
+		super(maximum,  maximumClosed);
 	}
 	
 	public double getMaximum() {
-		return maximum.getValue();
+		return this.getValue();
 	}
 	
 	public boolean isMaximumClosed() {
-		return maximum.isClosed();
+		return this.isClosed();
 	}
 	
-	public void increase(double value) {
-		maximum.increase(value);
-	}
-
+	@Override
 	public boolean include(double value, boolean maximumClosed) {
-		return value < maximum.getValue() || maximum.getValue() == value && maximumClosed;
+		return value < this.getValue() || this.getValue() == value && this.isClosed();
 	}
 		
-	public boolean excludeLimitMaximum(double value, boolean maximumClosed) {
-		return value > maximum.getValue() || maximum.getValue() == value && maximumClosed && !maximum.isClosed();
-	}
-
+	@Override
 	public boolean exclude(Interval that) {
 		return this.excludeLimitMaximum(that.getLimitMaximum().getMaximum(), that.getLimitMaximum().isMaximumClosed());
+	}
+	
+	private boolean excludeLimitMaximum(double value, boolean maximumClosed) {
+		return value > this.getValue() || this.getValue() == value && maximumClosed && !this.isClosed();
 	}
 
 }

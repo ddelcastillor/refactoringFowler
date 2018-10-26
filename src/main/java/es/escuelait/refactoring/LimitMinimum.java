@@ -1,38 +1,31 @@
 package es.escuelait.refactoring;
 
-public class LimitMinimum {	
-	private Limit minimum;
+public class LimitMinimum extends Limit{	
 		
 	public LimitMinimum(double minimum, boolean minimumClosed) {
-
-		this.minimum = new Limit(minimum,  minimumClosed);
+		super(minimum, minimumClosed);
 	}
 
 	public double getMinimum() {
-		return minimum.getValue();
-	}
-	
-	public void increase(double value) {
-		minimum.increase(value);
+		return this.getValue();
 	}
 	
 	public boolean isMinimumClosed() {
-		return minimum.isClosed();
+		return this.isClosed();
 	}
-
-
+	
+	@Override
 	public boolean include(double value, boolean minimumClosed) {
-		return minimum.getValue() < value || minimum.getValue() == value && minimum.isClosed();
+		return this.getValue() < value || this.getValue() == value && this.isClosed();
 	}
 	
-	
-	public boolean excludeLimitMinimum(double value, boolean minimumClosed) {
-		return value < minimum.getValue() || minimum.getValue() == value && minimumClosed && !minimum.isClosed() ;
-	}
-
-	
+	@Override
 	public boolean exclude(Interval that) {
 		return this.excludeLimitMinimum(that.getLimitMinimum().getMinimum(), that.getLimitMinimum().isMinimumClosed());
+	}
+	
+	private boolean excludeLimitMinimum(double value, boolean minimumClosed) {
+		return value < this.getValue() || this.getValue() == value && minimumClosed && !this.isClosed() ;
 	}
 	
 	

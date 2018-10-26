@@ -1,6 +1,6 @@
 package es.escuelait.refactoring;
 
-public class Limit {
+public abstract class Limit {
 	private double value;
 	private boolean closed;
 
@@ -20,6 +20,10 @@ public class Limit {
 	public void increase(double value) {
 		this.value += value;
 	}
+	
+	abstract public boolean exclude(Interval that);
+	
+	abstract public boolean include(double value, boolean closed);
 	
 	
 	
