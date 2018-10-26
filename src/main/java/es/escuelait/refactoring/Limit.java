@@ -21,7 +21,7 @@ public abstract class Limit {
 		this.value += value;
 	}
 	
-	abstract public boolean exclude(Interval that);
+	abstract public boolean exclude(Limit that);
 	
 	abstract public boolean include(double value, boolean closed);
 	

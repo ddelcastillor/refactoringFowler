@@ -21,12 +21,10 @@ public class LimitMaximum extends Limit{
 	}
 		
 	@Override
-	public boolean exclude(Interval that) {
-		return this.excludeLimitMaximum(that.getLimitMaximum().getMaximum(), that.getLimitMaximum().isMaximumClosed());
+	public boolean exclude(Limit that) {
+		return that.getValue() > this.getValue() || this.getValue() == that.getValue() && that.isClosed() && !this.isClosed();
 	}
 	
-	private boolean excludeLimitMaximum(double value, boolean maximumClosed) {
-		return value > this.getValue() || this.getValue() == value && maximumClosed && !this.isClosed();
-	}
+
 
 }

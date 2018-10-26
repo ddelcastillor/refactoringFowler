@@ -39,7 +39,7 @@ public class Interval {
 				
 	public boolean includes(Interval that) {
 		
-		return !(limitMinimum.exclude(that) || limitMaximum.exclude(that)) ;
+		return !(limitMinimum.exclude(that.getLimitMinimum()) || limitMaximum.exclude(that.getLimitMaximum())) ;
 				
 	}
 	

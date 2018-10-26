@@ -20,13 +20,11 @@ public class LimitMinimum extends Limit{
 	}
 	
 	@Override
-	public boolean exclude(Interval that) {
-		return this.excludeLimitMinimum(that.getLimitMinimum().getMinimum(), that.getLimitMinimum().isMinimumClosed());
+	public boolean exclude(Limit that) {
+		return that.getValue() < this.getValue() || this.getValue() == that.getValue() && that.isClosed() && !this.isClosed() ;
 	}
 	
-	private boolean excludeLimitMinimum(double value, boolean minimumClosed) {
-		return value < this.getValue() || this.getValue() == value && minimumClosed && !this.isClosed() ;
-	}
+
 	
 	
 	
