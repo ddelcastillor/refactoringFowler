@@ -3,6 +3,7 @@ package es.escuelait.refactoring;
 public abstract class Limit {
 	private double value;
 	private boolean closed;
+	protected LimitType close,open;
 
 	public Limit(double value, boolean closed) {
 		this.value = value;
