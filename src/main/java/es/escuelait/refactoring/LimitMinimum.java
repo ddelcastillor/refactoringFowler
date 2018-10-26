@@ -15,8 +15,8 @@ public class LimitMinimum extends Limit{
 	}
 	
 	@Override
-	public boolean include(double value, boolean minimumClosed) {
-		return this.getValue() < value || this.getValue() == value && this.isClosed();
+	public boolean include(Limit that) {
+		return this.getValue() < that.getValue() || this.getValue() == that.getValue() && this.isClosed();
 	}
 	
 	@Override

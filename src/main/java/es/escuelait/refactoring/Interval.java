@@ -31,9 +31,9 @@ public class Interval {
 	}
 	
 	public boolean includes(double value) {
-		return limitMinimum.include(value, limitMinimum.isMinimumClosed())
+		return limitMinimum.include(new LimitMinimum(value, limitMinimum.isMinimumClosed()))
 				 && 
-			   limitMaximum.include(value, limitMaximum.isMaximumClosed());
+			   limitMaximum.include(new LimitMaximum(value, limitMaximum.isMaximumClosed()));
 	}
 
 				

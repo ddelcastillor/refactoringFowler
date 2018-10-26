@@ -23,7 +23,7 @@ public abstract class Limit {
 	
 	abstract public boolean exclude(Limit that);
 	
-	abstract public boolean include(double value, boolean closed);
+	abstract public boolean include(Limit that);
 	
 	
 	

@@ -16,8 +16,8 @@ public class LimitMaximum extends Limit{
 	}
 	
 	@Override
-	public boolean include(double value, boolean maximumClosed) {
-		return value < this.getValue() || this.getValue() == value && this.isClosed();
+	public boolean include(Limit that) {
+		return that.getValue() < this.getValue() || this.getValue() == that.getValue() && this.isClosed();
 	}
 		
 	@Override
