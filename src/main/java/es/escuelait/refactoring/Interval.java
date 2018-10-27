@@ -17,31 +17,30 @@ public class Interval {
 		untilEndPoint.shift(value);
 	}
 
+	public FromEndPoint getFromEndPoint() {
+		return fromEndPoint;
+	}
+
+	public UntilEndPoint getUntilEndPoint() {
+		return untilEndPoint;
+	}
+
 	public double length() {
 		return this.untilEndPoint.getPoint() - this.fromEndPoint.getPoint();
 	}
 	
 	public boolean includes(double value) {
-		return (this.fromEndPoint.getPoint() < value || this.fromEndPoint.getPoint() == value && this.fromEndPoint.isClosed()) && 
-			(value < this.untilEndPoint.getPoint() || this.untilEndPoint.getPoint() == value && this.untilEndPoint.isClosed());
+		return fromEndPoint.include(value) && 
+				untilEndPoint.include(value);
 	}
 	
 	public boolean includes(Interval that) {
-		if (excludeFromEndPoint(that)) {
+		if (fromEndPoint.exclude(that)) {
 				return false;
 			}
-		if (excludeUntilEndPoint(that)) {
+		if (untilEndPoint.exclude(that)) {
 				return false;
 		}
 		return true;
-	}
-
-	private boolean excludeUntilEndPoint(Interval that) {
-		return this.untilEndPoint.getPoint() < that.untilEndPoint.getPoint() || this.untilEndPoint.getPoint() == that.untilEndPoint.getPoint() && !this.untilEndPoint.isClosed() && that.untilEndPoint.isClosed();
-	}
-
-	private boolean excludeFromEndPoint(Interval that) {
-		return this.fromEndPoint.getPoint() > that.fromEndPoint.getPoint() || this.fromEndPoint.getPoint() == that.fromEndPoint.getPoint() && !this.fromEndPoint.isClosed() && that.fromEndPoint.isClosed();
-	}
-	
+	}	
 }

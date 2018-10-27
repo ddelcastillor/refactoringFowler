@@ -23,4 +23,8 @@ public abstract class EndPoint {
 		this.point += value;
 	}
 	
+	public abstract boolean exclude(Interval that);
+	
+	public abstract boolean include(double value);
+	
 }
