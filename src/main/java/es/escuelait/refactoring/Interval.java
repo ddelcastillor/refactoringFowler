@@ -1,42 +1,36 @@
 package es.escuelait.refactoring;
 
 public class Interval {
-
-	private double minimum;
-
-	private boolean minimumClosed;
-
-	private double maximum;
-
-	private boolean maximumClosed;
+	
+	private FromEndPoint fromEndPoint;
+	
+	private UntilEndPoint untilEndPoint;
 
 	public Interval(double minimum, boolean minimumClosed, double maximum, boolean maximumClosed) {
 		assert minimum < maximum || minimum == maximum && minimumClosed || !minimumClosed;
-		this.minimum = minimum;
-		this.minimumClosed = minimumClosed;
-		this.maximum = maximum;
-		this.maximumClosed = maximumClosed;
+		this.fromEndPoint = new FromEndPoint(minimum,minimumClosed);
+		this.untilEndPoint = new UntilEndPoint(maximum,maximumClosed);
 	}
 
 	public void shift(double value) {
-		this.minimum += value;
-		this.maximum += value;
+		fromEndPoint.shift(value);
+		untilEndPoint.shift(value);
 	}
 
 	public double length() {
-		return this.maximum - this.minimum;
+		return this.untilEndPoint.getPoint() - this.fromEndPoint.getPoint();
 	}
 	
 	public boolean includes(double value) {
-		return (this.minimum < value || this.minimum == value && this.minimumClosed) && 
-			(value < this.maximum || this.maximum == value && this.maximumClosed);
+		return (this.fromEndPoint.getPoint() < value || this.fromEndPoint.getPoint() == value && this.fromEndPoint.isClosed()) && 
+			(value < this.untilEndPoint.getPoint() || this.untilEndPoint.getPoint() == value && this.untilEndPoint.isClosed());
 	}
 	
 	public boolean includes(Interval that) {
-		if (this.minimum > that.minimum || this.minimum == that.minimum && !this.minimumClosed && that.minimumClosed) {
+		if (this.fromEndPoint.getPoint() > that.fromEndPoint.getPoint() || this.fromEndPoint.getPoint() == that.fromEndPoint.getPoint() && !this.fromEndPoint.isClosed() && that.fromEndPoint.isClosed()) {
 				return false;
 			}
-		if (this.maximum < that.maximum || this.maximum == that.maximum && !this.maximumClosed && that.maximumClosed) {
+		if (this.untilEndPoint.getPoint() < that.untilEndPoint.getPoint() || this.untilEndPoint.getPoint() == that.untilEndPoint.getPoint() && !this.untilEndPoint.isClosed() && that.untilEndPoint.isClosed()) {
 				return false;
 		}
 		return true;
