@@ -27,13 +27,21 @@ public class Interval {
 	}
 	
 	public boolean includes(Interval that) {
-		if (this.fromEndPoint.getPoint() > that.fromEndPoint.getPoint() || this.fromEndPoint.getPoint() == that.fromEndPoint.getPoint() && !this.fromEndPoint.isClosed() && that.fromEndPoint.isClosed()) {
+		if (excludeFromEndPoint(that)) {
 				return false;
 			}
-		if (this.untilEndPoint.getPoint() < that.untilEndPoint.getPoint() || this.untilEndPoint.getPoint() == that.untilEndPoint.getPoint() && !this.untilEndPoint.isClosed() && that.untilEndPoint.isClosed()) {
+		if (excludeUntilEndPoint(that)) {
 				return false;
 		}
 		return true;
 	}
 
+	private boolean excludeUntilEndPoint(Interval that) {
+		return this.untilEndPoint.getPoint() < that.untilEndPoint.getPoint() || this.untilEndPoint.getPoint() == that.untilEndPoint.getPoint() && !this.untilEndPoint.isClosed() && that.untilEndPoint.isClosed();
+	}
+
+	private boolean excludeFromEndPoint(Interval that) {
+		return this.fromEndPoint.getPoint() > that.fromEndPoint.getPoint() || this.fromEndPoint.getPoint() == that.fromEndPoint.getPoint() && !this.fromEndPoint.isClosed() && that.fromEndPoint.isClosed();
+	}
+	
 }
