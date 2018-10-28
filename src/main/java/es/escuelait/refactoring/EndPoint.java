@@ -27,4 +27,6 @@ public abstract class EndPoint {
 	
 	public abstract boolean include(double value);
 	
+	public abstract boolean excludeEndPointValue(Interval that);
+	
 }

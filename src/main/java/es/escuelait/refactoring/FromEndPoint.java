@@ -2,8 +2,8 @@ package es.escuelait.refactoring;
 
 public class FromEndPoint extends EndPoint{
 
-	public FromEndPoint(double point, boolean close) {
-		super(point, close);
+	public FromEndPoint(double point, boolean closed) {
+		super(point, closed);
 	}
 
 	@Override
@@ -16,35 +16,21 @@ public class FromEndPoint extends EndPoint{
 		return this.include(value);
 	}
 	
-	public static FromEndPoint create(double point, boolean close) {
-		if (close) {
-			return new FromEndPointClosed(point,close);
+	public static FromEndPoint create(double point, boolean closed) {
+		if (closed) {
+			return new FromEndPointClosed(point,closed);
 		}else {
-			return new FromEndPointOpen(point,close);			
+			return new FromEndPointOpen(point,closed);			
 		}
 	}
-	
-	protected boolean excludeMinimum(Interval that) {
-		return isLessThanMinimum(that) || 
-				excludeEqualMinimum(that);
+		
+	public boolean excludeEndPointValue(Interval that) {
+		final boolean isLessThanFromEndPointValue = this.getPoint() > that.getFromEndPointValue();
+		return isLessThanFromEndPointValue || excludeEqualFromEndPointValue(that);
 	}
 	
-	private boolean isLessThanMinimum(Interval that) {
-		return this.getPoint() > that.getFromEndPointValue();
-	}
-			
-	private boolean excludeEqualMinimum(Interval that) {
-		return isEqualThanMinimum(that) && diffentClosedThatMinimumInterval(that);
-
-	}
-
-	private boolean isEqualThanMinimum(Interval that) {
-		return this.getPoint() == that.getFromEndPointValue();
-	}
 	
-	private boolean diffentClosedThatMinimumInterval(Interval that) {
-		return !this.isClosed()
-				&& that.isFromEndPointClosed();
+	private boolean excludeEqualFromEndPointValue(Interval that) {
+		return that.isEqualFromEndPointValue(this.getPoint()) && that.isDifferenteFromEndPointClosed(this.isClosed());
 	}
-			
 }

@@ -2,13 +2,13 @@ package es.escuelait.refactoring;
 
 public class FromEndPointClosed extends FromEndPoint {
 
-	public FromEndPointClosed(double point, boolean close) {
-		super(point, close);
+	public FromEndPointClosed(double point, boolean closed) {
+		super(point, closed);
 	}
 
 	@Override
 	public boolean exclude(Interval that) {
-		return excludeMinimum(that);
+		return excludeEndPointValue(that);
 	}
 
 	@Override

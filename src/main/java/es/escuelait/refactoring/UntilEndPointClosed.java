@@ -2,13 +2,13 @@ package es.escuelait.refactoring;
 
 public class UntilEndPointClosed extends UntilEndPoint {
 
-	public UntilEndPointClosed(double point, boolean close) {
-		super(point, close);
+	public UntilEndPointClosed(double point, boolean closed) {
+		super(point, closed);
 	}
 
 	@Override
 	public boolean exclude(Interval that) {		
-		return this.getPoint() < that.getFromEndPointValue();
+		return this.getPoint() < that.getUntilEndPointValue();
 	}
 	
 	@Override
