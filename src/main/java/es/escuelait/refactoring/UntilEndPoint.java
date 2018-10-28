@@ -8,14 +8,21 @@ public class UntilEndPoint extends EndPoint {
 
 	@Override
 	public boolean exclude(Interval that) {
-		return this.getPoint() < that.getUntilEndPoint().getPoint()
-				|| this.getPoint() == that.getUntilEndPoint().getPoint() && !this.isClosed()
-						&& that.getUntilEndPoint().isClosed();
+		return this.exclude(that);
 	}
+
 
 	@Override
 	public boolean include(double value) {
-		return value < this.getPoint() || this.getPoint() == value && this.isClosed();
+		return this.include(value);
 	}
 
+	public static UntilEndPoint create(double point, boolean close) {
+		if (close) {
+			return new UntilEndPointClosed(point,close);
+		}else {
+			return new UntilEndPointOpen(point,close);			
+		}
+	}
+	
 }

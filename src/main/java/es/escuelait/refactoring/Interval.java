@@ -2,14 +2,13 @@ package es.escuelait.refactoring;
 
 public class Interval {
 	
-	private FromEndPoint fromEndPoint;
+	private EndPoint fromEndPoint,untilEndPoint;
 	
-	private UntilEndPoint untilEndPoint;
-
 	public Interval(double minimum, boolean minimumClosed, double maximum, boolean maximumClosed) {
 		assert minimum < maximum || minimum == maximum && minimumClosed || !minimumClosed;
-		this.fromEndPoint = new FromEndPoint(minimum,minimumClosed);
-		this.untilEndPoint = new UntilEndPoint(maximum,maximumClosed);
+		
+		this.fromEndPoint =  FromEndPoint.create(minimum,minimumClosed);
+		this.untilEndPoint = UntilEndPoint.create(maximum,maximumClosed);
 	}
 
 	public void shift(double value) {
@@ -17,12 +16,20 @@ public class Interval {
 		untilEndPoint.shift(value);
 	}
 
-	public FromEndPoint getFromEndPoint() {
-		return fromEndPoint;
+	public double getFromEndPointValue() {
+		return fromEndPoint.getPoint();
 	}
 
-	public UntilEndPoint getUntilEndPoint() {
-		return untilEndPoint;
+	public double getUntilEndPointValue() {
+		return untilEndPoint.getPoint();
+	}
+	
+	public boolean isFromEndPointClosed() {
+		return fromEndPoint.isClosed();
+	}
+
+	public boolean isUntilEndPointClosed() {
+		return untilEndPoint.isClosed();
 	}
 
 	public double length() {
@@ -35,12 +42,7 @@ public class Interval {
 	}
 	
 	public boolean includes(Interval that) {
-		if (fromEndPoint.exclude(that)) {
-				return false;
-			}
-		if (untilEndPoint.exclude(that)) {
-				return false;
-		}
-		return true;
-	}	
+		return !fromEndPoint.exclude(that) && !untilEndPoint.exclude(that);
+	}
+	
 }
